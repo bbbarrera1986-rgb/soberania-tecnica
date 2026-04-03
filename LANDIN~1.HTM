@@ -1,0 +1,746 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sistema Integrado de Soberanía Pesquera — BRB Estrategia & Procesos</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --azul:    #080F1E;
+  --azul2:   #0D1F3C;
+  --azul3:   #162D56;
+  --cobre:   #C8702A;
+  --oro:     #D4A843;
+  --gris:    #8A9BB0;
+  --linea:   rgba(200,112,42,.25);
+  --blanco:  #F0ECE4;
+  --verde:   #2A7A4B;
+  --rojo:    #8B2020;
+}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  background:var(--azul);
+  color:var(--blanco);
+  font-family:'DM Sans',sans-serif;
+  font-weight:300;
+  overflow-x:hidden;
+}
+body::after{
+  content:'';
+  position:fixed;inset:0;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.035'/%3E%3C/svg%3E");
+  pointer-events:none;z-index:999;opacity:.5;
+}
+/* ── TOPBAR ── */
+.topbar{
+  position:fixed;top:0;left:0;right:0;z-index:900;
+  background:rgba(8,15,30,.92);
+  border-bottom:1px solid var(--linea);
+  backdrop-filter:blur(14px);
+  padding:16px 56px;
+  display:flex;justify-content:space-between;align-items:center;
+}
+.tb-logo{font-family:'DM Mono',monospace;font-size:.65rem;letter-spacing:.22em;text-transform:uppercase;color:var(--cobre);}
+.tb-logo span{color:var(--gris);font-weight:400;}
+.tb-cta{
+  font-family:'DM Mono',monospace;font-size:.62rem;letter-spacing:.15em;text-transform:uppercase;
+  background:var(--cobre);color:var(--azul);
+  padding:10px 24px;border:none;cursor:pointer;
+  transition:all .2s;text-decoration:none;display:inline-block;
+}
+.tb-cta:hover{background:var(--oro);transform:translateY(-1px);}
+/* ── HERO ── */
+.hero{
+  min-height:100vh;
+  display:grid;grid-template-columns:1fr 1fr;
+  padding-top:80px;
+  position:relative;overflow:hidden;
+}
+.hero::before{
+  content:'';position:absolute;
+  right:-300px;top:50%;transform:translateY(-50%);
+  width:800px;height:800px;border-radius:50%;
+  background:radial-gradient(circle,rgba(200,112,42,.07) 0%,transparent 70%);
+  pointer-events:none;
+}
+.hero::after{
+  content:'';position:absolute;
+  left:0;top:0;bottom:0;width:3px;
+  background:linear-gradient(180deg,transparent,var(--cobre) 30%,var(--oro) 70%,transparent);
+}
+.hero-left{
+  padding:100px 56px 80px 80px;
+  display:flex;flex-direction:column;justify-content:center;
+  position:relative;z-index:2;
+  animation:fadeUp .7s ease .1s both;
+}
+.h-eyebrow{
+  font-family:'DM Mono',monospace;font-size:.6rem;letter-spacing:.3em;
+  text-transform:uppercase;color:var(--cobre);
+  margin-bottom:24px;display:flex;align-items:center;gap:14px;
+}
+.h-eyebrow::before{content:'';display:block;width:44px;height:1px;background:var(--cobre);}
+.hero-title{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(2.6rem,4.5vw,5rem);
+  font-weight:700;line-height:1.05;
+  color:var(--blanco);margin-bottom:28px;
+}
+.hero-title em{font-style:italic;color:var(--cobre);}
+.hero-title .line2{display:block;font-weight:400;font-size:.72em;color:var(--gris);}
+.hero-sub{font-size:.95rem;line-height:1.75;color:var(--gris);max-width:500px;margin-bottom:48px;}
+.hero-actions{display:flex;gap:14px;flex-wrap:wrap;}
+.btn-p{
+  font-family:'DM Mono',monospace;font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;
+  background:var(--cobre);color:var(--azul);
+  padding:16px 32px;border:none;cursor:pointer;
+  transition:all .2s;text-decoration:none;display:inline-flex;align-items:center;gap:10px;
+}
+.btn-p:hover{background:var(--oro);transform:translateY(-2px);}
+.btn-s{
+  font-family:'DM Mono',monospace;font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;
+  background:transparent;color:var(--blanco);
+  padding:16px 32px;border:1px solid rgba(240,236,228,.2);cursor:pointer;
+  transition:all .2s;text-decoration:none;display:inline-block;
+}
+.btn-s:hover{border-color:var(--cobre);color:var(--cobre);}
+.hero-right{
+  padding:80px 80px 80px 40px;
+  display:flex;align-items:center;justify-content:center;
+  position:relative;z-index:2;
+  animation:fadeUp .7s ease .3s both;
+}
+/* COST CARD */
+.cost-card{
+  background:var(--azul2);
+  border:1px solid var(--linea);
+  width:100%;max-width:440px;
+  position:relative;overflow:hidden;
+}
+.cost-card::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:3px;
+  background:linear-gradient(90deg,var(--cobre),var(--oro));
+}
+.cc-header{padding:24px 32px 20px;border-bottom:1px solid var(--linea);}
+.cc-label{font-family:'DM Mono',monospace;font-size:.58rem;letter-spacing:.2em;text-transform:uppercase;color:var(--cobre);margin-bottom:8px;}
+.cc-title{font-family:'Cormorant Garamond',serif;font-size:1.1rem;font-weight:600;color:var(--blanco);}
+.cc-row{padding:18px 32px;border-bottom:1px solid rgba(255,255,255,.05);display:flex;justify-content:space-between;align-items:baseline;}
+.cc-row:last-child{border-bottom:none;}
+.cc-event{font-size:.82rem;color:var(--gris);max-width:240px;line-height:1.4;}
+.cc-cost{font-family:'Cormorant Garamond',serif;font-size:1.5rem;font-weight:700;color:#FF8A80;white-space:nowrap;}
+.cc-cost small{font-family:'DM Mono',monospace;font-size:.6rem;color:var(--gris);display:block;text-align:right;}
+.cc-footer{background:rgba(200,112,42,.08);padding:18px 32px;border-top:1px solid var(--linea);}
+.cc-footer p{font-size:.8rem;color:var(--gris);line-height:1.5;}
+.cc-footer strong{color:var(--cobre);}
+.scroll-ind{position:absolute;bottom:40px;left:80px;display:flex;align-items:center;gap:12px;opacity:0;animation:fadeUp .6s ease 1s both;}
+.pulse{width:8px;height:8px;border-radius:50%;background:var(--cobre);animation:pulse 2s infinite;}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1);}50%{opacity:.4;transform:scale(.6);}}
+.scroll-text{font-family:'DM Mono',monospace;font-size:.55rem;letter-spacing:.2em;color:var(--gris);text-transform:uppercase;}
+/* ── DIVIDER ── */
+.divider{height:1px;background:linear-gradient(90deg,transparent,var(--linea),transparent);margin:0 80px;}
+/* ── SECTION BASE ── */
+section{padding:100px 80px;}
+.sec-label{
+  font-family:'DM Mono',monospace;font-size:.6rem;letter-spacing:.28em;
+  text-transform:uppercase;color:var(--cobre);
+  margin-bottom:20px;display:flex;align-items:center;gap:14px;
+}
+.sec-label::before{content:'';display:block;width:36px;height:1px;background:var(--cobre);}
+.sec-title{font-family:'Cormorant Garamond',serif;font-size:clamp(1.8rem,3vw,3rem);font-weight:700;color:var(--blanco);line-height:1.15;margin-bottom:20px;}
+/* ── AMENAZAS ── */
+.amenazas{display:grid;grid-template-columns:1fr 1fr;gap:2px;margin-top:56px;}
+.amenaza{
+  background:var(--azul2);
+  padding:40px 36px;
+  position:relative;
+  border-bottom:2px solid transparent;
+  transition:border-color .3s;
+}
+.amenaza:hover{border-bottom-color:var(--cobre);}
+.am-num{font-family:'Cormorant Garamond',serif;font-size:3.5rem;font-weight:700;color:rgba(200,112,42,.15);position:absolute;top:16px;right:24px;line-height:1;}
+.am-title{font-family:'Cormorant Garamond',serif;font-size:1.1rem;font-weight:600;color:var(--blanco);margin-bottom:10px;}
+.am-body{font-size:.85rem;color:var(--gris);line-height:1.65;}
+.am-tag{
+  display:inline-block;margin-top:16px;
+  font-family:'DM Mono',monospace;font-size:.58rem;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--cobre);border:1px solid var(--linea);padding:4px 10px;
+}
+/* ── COMPONENTES ── */
+.componentes{display:grid;grid-template-columns:1fr 1fr;gap:2px;margin-top:56px;}
+.comp{background:var(--azul2);border:1px solid var(--linea);position:relative;overflow:hidden;transition:transform .25s;}
+.comp:hover{transform:translateY(-3px);}
+.comp-accent{height:3px;background:linear-gradient(90deg,var(--cobre),var(--oro));}
+/* componente guía — acento diferenciado */
+.comp.guia .comp-accent{background:linear-gradient(90deg,var(--verde),#40A06B);}
+.comp-head{padding:28px 32px 20px;border-bottom:1px solid rgba(255,255,255,.06);}
+.comp-num{font-family:'DM Mono',monospace;font-size:.6rem;letter-spacing:.2em;color:var(--cobre);margin-bottom:12px;}
+.comp.guia .comp-num{color:#40A06B;}
+.comp-title{font-family:'Cormorant Garamond',serif;font-size:1.15rem;font-weight:600;color:var(--blanco);}
+.comp-body{padding:24px 32px 28px;font-size:.85rem;color:var(--gris);line-height:1.7;}
+.comp-tags{display:flex;flex-wrap:wrap;gap:8px;padding:0 32px 28px;}
+.comp-tag{
+  font-family:'DM Mono',monospace;font-size:.58rem;letter-spacing:.12em;text-transform:uppercase;
+  border:1px solid var(--linea);color:var(--gris);padding:4px 10px;
+}
+.comp.guia .comp-tag{border-color:rgba(42,122,75,.4);color:#6FCF97;}
+/* ── GUÍA DESTAQUE ── */
+.guia-banner{
+  background:linear-gradient(135deg,#0A1F10 0%,#0D2145 100%);
+  border:1px solid rgba(42,122,75,.35);
+  margin-top:40px;
+  padding:40px 48px;
+  display:grid;grid-template-columns:1fr auto;
+  gap:40px;align-items:center;
+  position:relative;overflow:hidden;
+}
+.guia-banner::before{
+  content:'';position:absolute;left:0;top:0;bottom:0;width:4px;
+  background:linear-gradient(180deg,var(--verde),#40A06B);
+}
+.gb-label{font-family:'DM Mono',monospace;font-size:.58rem;letter-spacing:.22em;text-transform:uppercase;color:#40A06B;margin-bottom:12px;}
+.gb-title{font-family:'Cormorant Garamond',serif;font-size:1.4rem;font-weight:700;color:var(--blanco);margin-bottom:10px;}
+.gb-body{font-size:.88rem;color:var(--gris);line-height:1.7;}
+.gb-cta{
+  font-family:'DM Mono',monospace;font-size:.62rem;letter-spacing:.15em;text-transform:uppercase;
+  background:var(--verde);color:var(--blanco);
+  padding:14px 28px;border:none;cursor:pointer;white-space:nowrap;
+  transition:all .2s;text-decoration:none;display:inline-block;
+}
+.gb-cta:hover{background:#40A06B;transform:translateY(-1px);}
+/* ── NORMAS ── */
+.normas{display:flex;flex-wrap:wrap;gap:24px;margin-top:48px;}
+.norma{
+  flex:1;min-width:160px;
+  background:var(--azul2);border:1px solid var(--linea);
+  padding:28px 24px;text-align:center;
+}
+.norma-code{font-family:'DM Mono',monospace;font-size:.75rem;letter-spacing:.1em;color:var(--cobre);margin-bottom:8px;}
+.norma-name{font-size:.82rem;color:var(--gris);line-height:1.5;}
+/* ── RUTAS DE IMPLEMENTACIÓN ── */
+.rutas{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;margin-top:48px;}
+.ruta{background:var(--azul2);padding:36px 32px;border-top:3px solid var(--linea);transition:border-color .3s;}
+.ruta:hover{border-top-color:var(--cobre);}
+.ruta-tag{font-family:'DM Mono',monospace;font-size:.58rem;letter-spacing:.18em;text-transform:uppercase;color:var(--cobre);margin-bottom:14px;}
+.ruta-title{font-family:'Cormorant Garamond',serif;font-size:1.1rem;font-weight:600;color:var(--blanco);margin-bottom:12px;}
+.ruta-body{font-size:.83rem;color:var(--gris);line-height:1.65;}
+.ruta-pasos{margin-top:20px;list-style:none;}
+.ruta-pasos li{font-family:'DM Mono',monospace;font-size:.65rem;color:var(--gris);padding:6px 0;border-bottom:1px solid rgba(255,255,255,.05);display:flex;gap:10px;align-items:baseline;}
+.ruta-pasos li::before{content:'→';color:var(--cobre);flex-shrink:0;}
+/* ── TIMELINE ── */
+.timeline{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;margin-top:48px;}
+.tl-fase{background:var(--azul2);padding:36px 32px;}
+.tl-fase-num{font-family:'Cormorant Garamond',serif;font-size:3rem;font-weight:700;color:rgba(200,112,42,.2);line-height:1;margin-bottom:8px;}
+.tl-fase-period{font-family:'DM Mono',monospace;font-size:.62rem;letter-spacing:.15em;text-transform:uppercase;color:var(--cobre);margin-bottom:16px;}
+.tl-fase-title{font-family:'Cormorant Garamond',serif;font-size:1.05rem;font-weight:600;color:var(--blanco);margin-bottom:12px;}
+.tl-hito{
+  margin-top:20px;
+  background:rgba(200,112,42,.07);
+  border-left:2px solid var(--cobre);
+  padding:12px 16px;
+  font-size:.78rem;color:var(--gris);line-height:1.55;
+}
+.tl-hito strong{color:var(--cobre);display:block;font-family:'DM Mono',monospace;font-size:.6rem;letter-spacing:.12em;text-transform:uppercase;margin-bottom:4px;}
+/* ── AUTOR ── */
+.autor{background:var(--azul2);border:1px solid var(--linea);padding:56px 64px;display:grid;grid-template-columns:1fr 2fr;gap:56px;align-items:start;}
+.autor-izq{}
+.autor-eyebrow{font-family:'DM Mono',monospace;font-size:.58rem;letter-spacing:.22em;text-transform:uppercase;color:var(--cobre);margin-bottom:16px;}
+.autor-nombre{font-family:'Cormorant Garamond',serif;font-size:1.6rem;font-weight:700;color:var(--blanco);margin-bottom:8px;}
+.autor-cargo{font-size:.85rem;color:var(--gris);line-height:1.5;}
+.autor-stats{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:32px;}
+.stat{border-top:1px solid var(--linea);padding-top:14px;}
+.stat-num{font-family:'Cormorant Garamond',serif;font-size:2rem;font-weight:700;color:var(--cobre);}
+.stat-label{font-family:'DM Mono',monospace;font-size:.6rem;letter-spacing:.12em;text-transform:uppercase;color:var(--gris);}
+.autor-bio{font-size:.9rem;color:var(--gris);line-height:1.75;}
+.autor-bio p{margin-bottom:16px;}
+.autor-bio p:last-child{margin-bottom:0;}
+/* ── PRICING ── */
+.pricing{display:grid;grid-template-columns:1fr 1fr;gap:2px;margin-top:48px;}
+.plan{background:var(--azul2);border:1px solid var(--linea);padding:40px 40px 48px;position:relative;}
+.plan.destacado{border-color:var(--cobre);}
+.plan.destacado::before{
+  content:'RECOMENDADO';
+  position:absolute;top:-1px;right:32px;
+  font-family:'DM Mono',monospace;font-size:.55rem;letter-spacing:.18em;
+  background:var(--cobre);color:var(--azul);padding:5px 12px;
+}
+.plan-tag{font-family:'DM Mono',monospace;font-size:.6rem;letter-spacing:.2em;text-transform:uppercase;color:var(--cobre);margin-bottom:14px;}
+.plan-title{font-family:'Cormorant Garamond',serif;font-size:1.3rem;font-weight:700;color:var(--blanco);margin-bottom:8px;}
+.plan-desc{font-size:.83rem;color:var(--gris);line-height:1.6;margin-bottom:28px;}
+.plan-items{list-style:none;margin-bottom:36px;}
+.plan-items li{font-size:.83rem;color:var(--gris);padding:8px 0;border-bottom:1px solid rgba(255,255,255,.05);display:flex;gap:10px;align-items:baseline;}
+.plan-items li::before{content:'✓';color:var(--cobre);font-size:.75rem;flex-shrink:0;}
+.plan-cta{
+  font-family:'DM Mono',monospace;font-size:.65rem;letter-spacing:.15em;text-transform:uppercase;
+  background:transparent;color:var(--cobre);
+  border:1px solid var(--cobre);
+  padding:14px 28px;cursor:pointer;
+  transition:all .2s;text-decoration:none;display:inline-block;width:100%;text-align:center;
+}
+.plan.destacado .plan-cta{background:var(--cobre);color:var(--azul);}
+.plan-cta:hover{background:var(--oro);border-color:var(--oro);color:var(--azul);}
+/* ── URGENCIA ── */
+.urgencia{
+  background:rgba(139,32,32,.08);
+  border:1px solid rgba(139,32,32,.3);
+  padding:40px 48px;
+  margin-top:48px;
+  display:grid;grid-template-columns:auto 1fr;
+  gap:32px;align-items:start;
+}
+.urg-icon{font-size:1.8rem;opacity:.7;}
+.urg-label{font-family:'DM Mono',monospace;font-size:.58rem;letter-spacing:.22em;text-transform:uppercase;color:var(--rojo);margin-bottom:10px;}
+.urg-text{font-size:.88rem;color:var(--gris);line-height:1.7;}
+/* ── CONTACTO ── */
+.contacto-grid{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:start;margin-top:48px;}
+.contacto-info{}
+.ci-label{font-family:'DM Mono',monospace;font-size:.6rem;letter-spacing:.25em;text-transform:uppercase;color:var(--cobre);margin-bottom:16px;}
+.ci-item{display:flex;align-items:baseline;gap:14px;padding:12px 0;border-bottom:1px solid rgba(255,255,255,.06);}
+.ci-key{font-family:'DM Mono',monospace;font-size:.62rem;letter-spacing:.1em;color:var(--gris);min-width:80px;}
+.ci-val{font-size:.88rem;color:var(--blanco);}
+.contacto-form{}
+.form-row{margin-bottom:14px;}
+.form-row input,.form-row select,.form-row textarea{
+  width:100%;padding:12px 16px;
+  background:var(--azul2);
+  border:1px solid rgba(255,255,255,.1);
+  color:var(--blanco);
+  font-family:'DM Sans',sans-serif;font-size:.85rem;
+  outline:none;transition:border-color .2s;
+}
+.form-row input:focus,.form-row select:focus,.form-row textarea:focus{border-color:var(--cobre);}
+.form-row textarea{resize:vertical;min-height:100px;}
+.form-row select option{background:var(--azul2);}
+.form-submit{
+  font-family:'DM Mono',monospace;font-size:.65rem;letter-spacing:.15em;text-transform:uppercase;
+  background:var(--cobre);color:var(--azul);
+  border:none;padding:16px 32px;cursor:pointer;width:100%;
+  transition:all .2s;
+}
+.form-submit:hover{background:var(--oro);}
+/* ── FOOTER ── */
+footer{
+  background:var(--azul2);
+  border-top:1px solid var(--linea);
+  padding:40px 80px;
+  display:flex;justify-content:space-between;align-items:center;
+}
+.ft-brand{font-family:'DM Mono',monospace;font-size:.65rem;letter-spacing:.2em;text-transform:uppercase;color:var(--cobre);}
+.ft-brand span{color:var(--gris);}
+.ft-copy{font-family:'DM Mono',monospace;font-size:.6rem;color:var(--gris);letter-spacing:.1em;}
+/* ── ANIMS ── */
+@keyframes fadeUp{from{opacity:0;transform:translateY(18px);}to{opacity:1;transform:translateY(0);}}
+/* ── RESPONSIVE ── */
+@media(max-width:900px){
+  .topbar{padding:14px 24px;}
+  .hero{grid-template-columns:1fr;min-height:auto;}
+  .hero-left{padding:100px 24px 48px;}
+  .hero-right{padding:0 24px 64px;display:none;}
+  section{padding:72px 24px;}
+  .amenazas,.componentes,.rutas,.timeline,.pricing,.contacto-grid{grid-template-columns:1fr;}
+  .autor{grid-template-columns:1fr;}
+  footer{flex-direction:column;gap:12px;padding:32px 24px;}
+  .guia-banner{grid-template-columns:1fr;gap:24px;}
+}
+</style>
+</head>
+<body>
+
+<!-- TOPBAR -->
+<div class="topbar">
+  <div class="tb-logo">BRB <span>Estrategia & Procesos</span></div>
+  <a href="#contacto" class="tb-cta">Solicitar información →</a>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-left">
+    <div class="h-eyebrow">Sistema Integrado · v2.1 · Patagonia Argentina</div>
+    <h1 class="hero-title">
+      Soberanía<br>
+      <em>Técnica</em>
+      <span class="line2">Pesquera</span>
+    </h1>
+    <p class="hero-sub">El sistema completo que convierte el conocimiento técnico en registros auditables, dictámenes económicos en 30 segundos y supervisores que toman decisiones fundamentadas bajo presión de producción.</p>
+    <div class="hero-actions">
+      <a href="#componentes" class="btn-p">Ver el sistema completo →</a>
+      <a href="#contacto" class="btn-s">Solicitar información</a>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="cost-card">
+      <div class="cc-header">
+        <div class="cc-label">Costo operativo cuantificado</div>
+        <div class="cc-title">Lo que su planta pierde sin el sistema</div>
+      </div>
+      <div class="cc-row">
+        <div class="cc-event">Rechazo de lote en destino europeo por desvío de TVB-N no detectado</div>
+        <div class="cc-cost">USD 28K<small>por evento</small></div>
+      </div>
+      <div class="cc-row">
+        <div class="cc-event">No Conformidad Mayor en auditoría BRCGS — pérdida de certificación</div>
+        <div class="cc-cost">USD 15K<small>recertificación</small></div>
+      </div>
+      <div class="cc-row">
+        <div class="cc-event">Variación de rendimiento del 3% no detectada durante una temporada</div>
+        <div class="cc-cost">USD 40K<small>merma anual</small></div>
+      </div>
+      <div class="cc-footer">
+        <p><strong>El sistema se recupera evitando un solo evento de estos.</strong> El ROI no es educativo: es operativo y cuantificable en USD el primer mes de uso.</p>
+      </div>
+    </div>
+  </div>
+  <div class="scroll-ind">
+    <div class="pulse"></div>
+    <div class="scroll-text">Continuar ↓</div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- AMENAZAS -->
+<section>
+  <div class="sec-label">Diagnóstico de situación</div>
+  <h2 class="sec-title">Su planta enfrenta estas cuatro amenazas.<br>El sistema las cubre todas.</h2>
+  <div class="amenazas">
+    <div class="amenaza">
+      <div class="am-num">01</div>
+      <div class="am-title">El auditor llega y los registros no resisten</div>
+      <div class="am-body">Los límites críticos están definidos en el plan HACCP. Los registros del piso de planta no reflejan lo que dice el plan. La brecha entre el documento y la operación es la fuente del 80% de las Nc mayores en auditorías de segunda parte.</div>
+      <div class="am-tag">BRCGS Cláusula 3.7</div>
+    </div>
+    <div class="amenaza">
+      <div class="am-num">02</div>
+      <div class="am-title">El rendimiento varía y nadie sabe cuánto cuesta</div>
+      <div class="am-body">La variación de rendimiento en línea de P&D de langostino es un hecho. Lo que no se mide no se cobra como desvío. Una planta que no cuantifica en USD la merma de rendimiento está regalando margen por turno.</div>
+      <div class="am-tag">Impacto FOB directo</div>
+    </div>
+    <div class="amenaza">
+      <div class="am-num">03</div>
+      <div class="am-title">El barco entrega y el supervisor no tiene criterio de rechazo</div>
+      <div class="am-body">El langostino llega de la traílla. El supervisor tiene 15 minutos para decidir si acepta o rechaza el lote. Sin parámetros documentados de triage biológico (temperatura, ecdisis, TVB-N), la decisión es intuición, no gestión.</div>
+      <div class="am-tag">Recepción de MP</div>
+    </div>
+    <div class="amenaza">
+      <div class="am-num">04</div>
+      <div class="am-title">El supervisor sabe operar pero no sabe fundamentar</div>
+      <div class="am-body">La competencia técnica del supervisor de planta pesquera se construye en el piso. La capacidad de fundamentar una decisión ante un auditor, un cliente o la dirección técnica requiere formación específica que el mercado argentino no ofrece en formato aplicable.</div>
+      <div class="am-tag">Capital técnico humano</div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- COMPONENTES -->
+<section id="componentes">
+  <div class="sec-label">Los 5 componentes del sistema</div>
+  <h2 class="sec-title">Un sistema completo.<br>No un manual más.</h2>
+  <p style="color:var(--gris);max-width:620px;font-size:.92rem;line-height:1.75;margin-bottom:8px;">Cada componente fue diseñado para un momento diferente en la operación de la planta. Los cinco juntos cubren el ciclo completo: conocer, ejecutar, formar, decidir e implementar. Ninguno opera en condiciones óptimas sin los otros.</p>
+
+  <div class="componentes">
+    <!-- 01 -->
+    <div class="comp">
+      <div class="comp-accent"></div>
+      <div class="comp-head">
+        <div class="comp-num">// 01</div>
+        <div class="comp-title">El sustento científico que fundamenta cada decisión ante el auditor</div>
+      </div>
+      <div class="comp-body">La arquitectura del conocimiento técnico del sistema. Cubre la biología del recurso, la ingeniería de rendimientos, la termodinámica del frío, los controles toxicológicos y el marco de defensa alimentaria. Es el respaldo que convierte una afirmación técnica en un argumento inimpugnable.</div>
+      <div class="comp-tags">
+        <span class="comp-tag">Ciencia del proceso</span>
+        <span class="comp-tag">Ingeniería de rendimientos</span>
+        <span class="comp-tag">Defensa alimentaria</span>
+      </div>
+    </div>
+    <!-- 02 -->
+    <div class="comp">
+      <div class="comp-accent"></div>
+      <div class="comp-head">
+        <div class="comp-num">// 02</div>
+        <div class="comp-title">Los procedimientos que convierten la teoría en registros auditables en la línea</div>
+      </div>
+      <div class="comp-body">Protocolos operativos estándar (SOP) listos para implementar en el piso de planta. Incluye las planillas de control con todos los campos necesarios para resistir una auditoría de tercera parte, con el respaldo técnico-científico que justifica cada límite crítico documentado.</div>
+      <div class="comp-tags">
+        <span class="comp-tag">POE ejecutable</span>
+        <span class="comp-tag">Planillas auditables</span>
+        <span class="comp-tag">BRCGS-ready</span>
+      </div>
+    </div>
+    <!-- 03 -->
+    <div class="comp">
+      <div class="comp-accent"></div>
+      <div class="comp-head">
+        <div class="comp-num">// 03</div>
+        <div class="comp-title">El programa que forma al supervisor que no va a cometer el error del caso B</div>
+      </div>
+      <div class="comp-body">Ciclo de especialización técnica de 16 sesiones con IA integrada como motor de diagnóstico. Diseñado para supervisores y jefes de planta. Cada sesión construye sobre la anterior y culmina en la capacidad de tomar decisiones técnicas fundamentadas bajo presión de producción.</div>
+      <div class="comp-tags">
+        <span class="comp-tag">16 sesiones</span>
+        <span class="comp-tag">IA diagnóstico</span>
+        <span class="comp-tag">Casuística real</span>
+      </div>
+    </div>
+    <!-- 04 -->
+    <div class="comp">
+      <div class="comp-accent"></div>
+      <div class="comp-head">
+        <div class="comp-num">// 04</div>
+        <div class="comp-title">La interfaz que cuantifica en USD el costo de cada desvío antes de que escale</div>
+      </div>
+      <div class="comp-body">El Árbol de Decisión Interactivo. Sin equivalente en el mercado hispanoamericano. El técnico ingresa los datos del lote y obtiene dictamen, acciones correctivas y proyección económica en 30 segundos. Funciona sin conexión a internet. Compatible con cualquier plataforma.</div>
+      <div class="comp-tags">
+        <span class="comp-tag">HTML interactivo</span>
+        <span class="comp-tag">Sin conexión</span>
+        <span class="comp-tag">IA integrada</span>
+      </div>
+    </div>
+    <!-- 05 — GUÍA (nuevo) -->
+    <div class="comp guia" style="grid-column:1/-1;">
+      <div class="comp-accent"></div>
+      <div class="comp-head">
+        <div class="comp-num">// 05 — NUEVO EN V2.1</div>
+        <div class="comp-title">La guía que define exactamente qué abrir primero, en qué orden y qué esperar de cada herramienta</div>
+      </div>
+      <div class="comp-body" style="max-width:800px;">La Guía de Interpretación e Implementación cierra el único gap que el kit anterior no resolvía: el punto de entrada. Un sistema técnico sin protocolo de instalación produce resultados heterogéneos. La Guía define tres rutas diferenciadas según perfil del usuario (auditoría inminente, formación gradual, despliegue institucional), el protocolo exacto de activación del árbol de decisión con los datos que requiere cada módulo, el cronograma de implementación de 30/60/90 días con hitos verificables, y la vinculación explícita con la Addenda Técnica v2.1.</div>
+      <div class="comp-tags">
+        <span class="comp-tag">Rutas por perfil</span>
+        <span class="comp-tag">Protocolo de activación</span>
+        <span class="comp-tag">Cronograma 30/60/90</span>
+        <span class="comp-tag">Hitos verificables</span>
+        <span class="comp-tag">Lista de verificación</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- GUÍA BANNER DESTAQUE -->
+  <div class="guia-banner">
+    <div>
+      <div class="gb-label">Por qué el componente 05 es crítico</div>
+      <div class="gb-title">Un kit sin guía de implementación transfiere archivos.<br>Un kit con guía transfiere un sistema.</div>
+      <div class="gb-body">La diferencia entre un comprador que extrae valor del sistema en los primeros 15 días y uno que abandona después de abrir el primer PDF es la presencia de un protocolo de entrada. La Guía de Implementación v1.0 es ese protocolo. Incluye el mapa de dependencias entre componentes, los datos específicos que cada módulo del árbol de decisión necesita antes de operar, y la checklist de implementación por fase que funciona como expediente de auditoría interna.</div>
+    </div>
+    <a href="#contacto" class="gb-cta">Incluido en el sistema →</a>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- RUTAS DE IMPLEMENTACIÓN -->
+<section>
+  <div class="sec-label">Rutas de entrada</div>
+  <h2 class="sec-title">Tres perfiles. Tres secuencias.<br>Un solo sistema.</h2>
+  <p style="color:var(--gris);max-width:620px;font-size:.92rem;line-height:1.75;">No todos los compradores llegan al sistema en la misma situación. La Guía de Implementación define la ruta correcta según su contexto operativo actual.</p>
+  <div class="rutas">
+    <div class="ruta">
+      <div class="ruta-tag">Ruta A</div>
+      <div class="ruta-title">Auditoría inminente<br>(0–30 días)</div>
+      <div class="ruta-body">Planta con auditoría programada o reclamo activo en destino. Prioridad: registros auditables y dictamen disponible para defender cada lote.</div>
+      <ul class="ruta-pasos">
+        <li>Activar planilla de control (Componente 02)</li>
+        <li>Ejecutar árbol de decisión sobre lote en proceso</li>
+        <li>Imprimir dictamen como defensa técnica</li>
+        <li>Consultar Addenda Sección 5 para mapeo normativo</li>
+      </ul>
+    </div>
+    <div class="ruta">
+      <div class="ruta-tag">Ruta B</div>
+      <div class="ruta-title">Formación gradual<br>(0–90 días)</div>
+      <div class="ruta-body">Supervisor de producción en proceso de formación. Prioridad: construir competencia operativa antes de usar el árbol como instrumento de decisión ejecutiva.</div>
+      <ul class="ruta-pasos">
+        <li>Días 1–3: instalar planilla y primer registro</li>
+        <li>Días 4–14: sesiones 1–4 del programa</li>
+        <li>Día 15: primer dictamen del árbol con datos reales</li>
+        <li>Días 16–90: sesiones 5–16 + simulacro de auditoría</li>
+      </ul>
+    </div>
+    <div class="ruta">
+      <div class="ruta-tag">Ruta C</div>
+      <div class="ruta-title">Despliegue institucional<br>(equipo completo)</div>
+      <div class="ruta-body">Director técnico que implementa el sistema en múltiples usuarios o áreas. Prioridad: estandarizar antes de distribuir.</div>
+      <ul class="ruta-pasos">
+        <li>Director completa Ruta B antes de distribuir</li>
+        <li>Definir roles: planilla, árbol, referencia técnica</li>
+        <li>Instalar Componente 02 en cada dispositivo de planta</li>
+        <li>Auditoría interna al cierre de cada módulo del programa</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- TIMELINE 30/60/90 -->
+<section>
+  <div class="sec-label">Cronograma de implementación</div>
+  <h2 class="sec-title">30 / 60 / 90 días.<br>Hitos verificables en cada etapa.</h2>
+  <div class="timeline">
+    <div class="tl-fase">
+      <div class="tl-fase-num">30</div>
+      <div class="tl-fase-period">Días 1 a 30</div>
+      <div class="tl-fase-title">Instalación y activación</div>
+      <div style="font-size:.83rem;color:var(--gris);line-height:1.65;">Planilla instalada. Primeros 10 dictámenes del árbol emitidos sobre lotes reales. Sesiones 1–4 del programa completadas. Sistema activo en operación cotidiana.</div>
+      <div class="tl-hito">
+        <strong>Hito verificable</strong>
+        El supervisor puede explicar el dictamen del árbol al jefe de planta sin consultar la Guía.
+      </div>
+    </div>
+    <div class="tl-fase">
+      <div class="tl-fase-num">60</div>
+      <div class="tl-fase-period">Días 31 a 60</div>
+      <div class="tl-fase-title">Consolidación y auditoría interna</div>
+      <div style="font-size:.83rem;color:var(--gris);line-height:1.65;">Sesiones 5–12 completadas. Plan de Muestreo y sistema NC-CAPA (Addenda v2.1) implementados. Auditoría interna parcial ejecutada.</div>
+      <div class="tl-hito">
+        <strong>Hito verificable</strong>
+        La tasa de desvíos controlables es menor que en la semana 1. Los Formularios PE tienen series de 30 días continuas.
+      </div>
+    </div>
+    <div class="tl-fase">
+      <div class="tl-fase-num">90</div>
+      <div class="tl-fase-period">Días 61 a 90</div>
+      <div class="tl-fase-title">Certificación</div>
+      <div style="font-size:.83rem;color:var(--gris);line-height:1.65;">Sesiones 13–16 completadas. Simulacro de auditoría de segunda parte ejecutado. Observaciones corregidas. Dosier de auditoría completo.</div>
+      <div class="tl-hito">
+        <strong>Hito verificable</strong>
+        Matriz de cobertura normativa completada sin brechas. Sistema declarado listo para auditoría de certificación.
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- NORMAS -->
+<section>
+  <div class="sec-label">Cobertura normativa</div>
+  <h2 class="sec-title" style="max-width:600px;">Todo el sistema está alineado con los mercados que pagan el mejor precio.</h2>
+  <p style="color:var(--gris);max-width:560px;font-size:.92rem;line-height:1.75;">Cada límite crítico del sistema tiene su fundamento normativo documentado y defensible ante auditores internacionales de primera línea.</p>
+  <div class="normas">
+    <div class="norma"><div class="norma-code">BRCGS V9</div><div class="norma-name">Certificación global · Mercado europeo y cadenas internacionales</div></div>
+    <div class="norma"><div class="norma-code">FDA · 21 CFR 123</div><div class="norma-name">HACCP Seafood · Mercado de EE.UU.</div></div>
+    <div class="norma"><div class="norma-code">Reg. UE 853/2004</div><div class="norma-name">Higiene de productos de origen animal · Unión Europea</div></div>
+    <div class="norma"><div class="norma-code">ISO 22000</div><div class="norma-name">Sistema de gestión de inocuidad alimentaria</div></div>
+    <div class="norma"><div class="norma-code">CAA Art. 573–574</div><div class="norma-name">Código Alimentario Argentino · ANMAT / SENASA</div></div>
+    <div class="norma"><div class="norma-code">ISO 2859-1</div><div class="norma-name">Muestreo estadístico por atributos · Plan de muestreo formalizado</div></div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- AUTOR -->
+<section>
+  <div class="sec-label">Autor y responsable técnico del sistema</div>
+  <div class="autor">
+    <div class="autor-izq">
+      <div class="autor-eyebrow">Criterio de autor</div>
+      <div class="autor-nombre">Boris Rodríguez Barrera</div>
+      <div class="autor-cargo">Especialista en Gestión de Calidad<br>Dirección de Procesos Industriales<br>BRB Estrategia & Procesos<br>Soberanía Técnica Ediciones<br>Puerto Madryn, Chubut, Argentina</div>
+      <div class="autor-stats">
+        <div class="stat"><div class="stat-num">15+</div><div class="stat-label">Años en dirección de planta</div></div>
+        <div class="stat"><div class="stat-num">5.6K</div><div class="stat-label">Ton MP gestionadas (temporada pico)</div></div>
+        <div class="stat"><div class="stat-num">276</div><div class="stat-label">Personas dirigidas en QA/QC farmacéutico</div></div>
+        <div class="stat"><div class="stat-num">0</div><div class="stat-label">Nc mayores en 3 auditorías internacionales</div></div>
+      </div>
+    </div>
+    <div class="autor-bio">
+      <p>Los parámetros operativos de este sistema no son bibliografía. Son el resultado directo de gestionar 5.600 toneladas de materia prima bajo los estándares de exportación más exigentes del mercado, y de liberar 140 lotes mensuales de formas farmacéuticas estériles con un índice de rechazo crítico inferior al 1%.</p>
+      <p>Ex Director de Calidad y Jefe de Microbiología en manufactura farmacéutica estéril (Laboratorios AICA, 2014–2018). Ex Plant Manager en la industria pesquera patagónica (Badal Talens / Ecoprom SRL, 2019–2023). Auditor Líder ISO 9001:2015. Especialista en validación de procesos críticos bajo ALCOA+ y GMP/BPM.</p>
+      <p>Los valores de NCA, tamaño de muestra y puntos de corte Ac/Re del sistema provienen de experiencia operativa directa en plantas de la región patagónica y no tienen equivalente exacto en publicación académica estándar para <em>Pleoticus muelleri</em>. El profesional a cargo retiene la autoridad técnica final.</p>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- PRICING -->
+<section>
+  <div class="sec-label">Modalidades de acceso</div>
+  <h2 class="sec-title" style="text-align:center;max-width:560px;margin:0 auto 14px;">Dos modalidades. Un solo sistema.</h2>
+  <p style="text-align:center;color:var(--gris);font-size:.88rem;margin-bottom:0;">Incluye los 5 componentes del sistema en ambas modalidades.</p>
+  <div class="pricing">
+    <div class="plan">
+      <div class="plan-tag">Modalidad Individual</div>
+      <div class="plan-title">Licencia personal</div>
+      <div class="plan-desc">Para el profesional técnico o supervisor que implementa el sistema en su planta.</div>
+      <ul class="plan-items">
+        <li>Acceso completo a los 5 componentes en formato digital</li>
+        <li>Tratado Integrado v2.0 + Addenda Técnica v2.1</li>
+        <li>Árbol de Decisión Interactivo (HTML offline)</li>
+        <li>Programa de Especialización — 16 frecuencias</li>
+        <li>Guía de Implementación v1.0</li>
+        <li>Licencia de uso personal no transferible</li>
+        <li>Actualizaciones normativas del año en curso</li>
+      </ul>
+      <a href="#contacto" class="plan-cta">Consultar precio →</a>
+    </div>
+    <div class="plan destacado">
+      <div class="plan-tag">Modalidad Institucional</div>
+      <div class="plan-title">Licencia de equipo</div>
+      <div class="plan-desc">Para plantas, grupos pesqueros o cámaras del sector que implementan el sistema en todo el equipo técnico y de producción.</div>
+      <ul class="plan-items">
+        <li>Los 5 componentes + personalización con logo institucional</li>
+        <li>Árbol de Decisión con parámetros ajustados a la planta</li>
+        <li>Programa de Especialización en modalidad grupal</li>
+        <li>Guía de Implementación en versión institucional</li>
+        <li>Sesión de implementación con el autor (modalidad remota)</li>
+        <li>Posibilidad de consultoría de implementación in situ</li>
+        <li>Soporte técnico durante el período de implementación</li>
+      </ul>
+      <a href="#contacto" class="plan-cta">Consultar precio →</a>
+    </div>
+  </div>
+
+  <div class="urgencia">
+    <div class="urg-icon">⚠</div>
+    <div>
+      <div class="urg-label">Prioridad de atención</div>
+      <div class="urg-text">Si su planta tiene una auditoría programada en los próximos 60 días, acaba de recibir una observación mayor, o está gestionando un reclamo activo en destino — indíquelo en el mensaje. Se prioriza la consulta y se evalúa la posibilidad de asesoría de implementación directa bajo la Ruta A de la Guía de Implementación.</div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- CONTACTO -->
+<section id="contacto">
+  <div class="sec-label">Contacto</div>
+  <h2 class="sec-title">Solicite información sin compromiso.</h2>
+  <div class="contacto-grid">
+    <div class="contacto-info">
+      <div class="ci-label">Datos de contacto</div>
+      <div class="ci-item"><span class="ci-key">Nombre</span><span class="ci-val">Boris Rodríguez Barrera</span></div>
+      <div class="ci-item"><span class="ci-key">Empresa</span><span class="ci-val">BRB Estrategia & Procesos</span></div>
+      <div class="ci-item"><span class="ci-key">Editorial</span><span class="ci-val">Soberanía Técnica Ediciones</span></div>
+      <div class="ci-item"><span class="ci-key">Ubicación</span><span class="ci-val">Puerto Madryn, Chubut, Argentina</span></div>
+      <div class="ci-item"><span class="ci-key">Teléfono</span><span class="ci-val">297 517 6351</span></div>
+      <div class="ci-item"><span class="ci-key">Email</span><span class="ci-val">bbbarrera1986@gmail.com</span></div>
+    </div>
+    <div class="contacto-form">
+      <div class="form-row"><input type="text" placeholder="Nombre y empresa" /></div>
+      <div class="form-row"><input type="email" placeholder="Email de contacto" /></div>
+      <div class="form-row"><input type="text" placeholder="Teléfono (opcional)" /></div>
+      <div class="form-row">
+        <select>
+          <option value="" disabled selected>Tipo de consulta</option>
+          <option>Licencia individual</option>
+          <option>Licencia institucional</option>
+          <option>Consultoría de implementación</option>
+          <option>Auditoría inminente — atención prioritaria</option>
+          <option>Otra consulta técnica</option>
+        </select>
+      </div>
+      <div class="form-row"><textarea placeholder="Describa brevemente su situación operativa actual y el objetivo de su consulta."></textarea></div>
+      <button class="form-submit">Enviar consulta →</button>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="ft-brand">BRB <span>Estrategia & Procesos</span> · Soberanía Técnica Ediciones</div>
+  <div class="ft-copy">© 2026 Boris Rodríguez Barrera · Puerto Madryn, Chubut, Argentina · Todos los derechos reservados</div>
+</footer>
+
+</body>
+</html>
